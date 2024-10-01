@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exploration Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #000, #1a1a1a); /* Dark gradient background */
+            color: #fff; /* White text */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+        canvas {
+            display: block;
+        }
+        #controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px; /* Space between buttons */
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: rgba(0, 128, 255, 0.8); /* Blue color */
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+            display: flex; /* Align icon and text */
+            align-items: center; /* Center align */
+        }
+        button i {
+            margin-right: 5px; /* Space between icon and text */
+        }
+        button:hover {
+            background-color: rgba(0, 128, 255, 1); /* Darker blue on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        #ocean-name {
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            font-size: 24px;
+            pointer-events: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better readability */
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <button id="manual-mode"><i class="fas fa-mouse-pointer"></i> Inspect</button>
+        <button id="auto-mode"><i class="fas fa-play"></i> Enjoy</button>
+    </div>
+    <div id="ocean-name">Exploration Hub</div> <!-- Added a title for the hub -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+        // Create a scene
+        const scene = new THREE.Scene();
+
+        // Create a camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Create a renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add light to the scene
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(1, 1, 1).normalize();
+        scene.add(light);
+
+        let model;
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let rotationSpeed = 0.01; // Speed of continuous rotation
+        let isAutoRotation = true; // Start with automatic rotation enabled
+
+        // Load 3D model
+        const loader = new THREE.GLTFLoader();
+        loader.load('models/earth.glb', function (gltf) {
+            model = gltf.scene; // Store the model in a variable
+            scene.add(model);
+            animate(); // Start the animation loop
+        }, undefined, function (error) {
+            console.error(error);
+        });
+
+        // Load star texture and create a star field background
+        const textureLoader = new THREE.TextureLoader();
+        textureLoader.load('images/SpaceBack.png', function (texture) {
+            const geometry = new THREE.SphereGeometry(100, 32, 32); // Large sphere
+            const material = new THREE.MeshBasicMaterial({
+                map: texture,
+                side: THREE.BackSide // Render the inside of the sphere
+            });
+            const stars = new THREE.Mesh(geometry, material);
+            scene.add(stars);
+        });
+
+        // Raycaster for detecting clicks and mouse position
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        // Mouse down event listener to start dragging
+        document.addEventListener('mousedown', (event) => {
+            isDragging = true;
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+        });
+
+        // Mouse move event listener to rotate the Earth while dragging
+        document.addEventListener('mousemove', (event) => {
+            if (isDragging && model && !isAutoRotation) {
+                const deltaMove = {
+                    x: event.clientX - previousMousePosition.x,
+                    y: event.clientY - previousMousePosition.y
+                };
+
+                const rotationSensitivity = 0.005; // Adjust to control rotation sensitivity
+                model.rotation.y += deltaMove.x * rotationSensitivity;
+                model.rotation.x += deltaMove.y * rotationSensitivity;
+
+                previousMousePosition = {
+                    x: event.clientX,
+                    y: event.clientY
+                };
+            }
+        });
+
+        // Mouse up event listener to stop dragging
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Mouse wheel event listener for zooming
+        const minZoomDistance = 2; // Set the minimum zoom distance
+        const maxZoomDistance = 20; // Set the maximum zoom distance
+
+        document.addEventListener('wheel', (event) => {
+            event.preventDefault(); // Prevent default scroll behavior
+            const newZoom = camera.position.z + event.deltaY * 0.01; // Calculate new zoom position
+            // Only update zoom if within bounds
+            if (newZoom > minZoomDistance && newZoom < maxZoomDistance) {
+                camera.position.z = newZoom;
+            }
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            if (model && isAutoRotation) {
+                model.rotation.y += rotationSpeed; // Continuous rotation in auto mode
+            }
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resizing
+        window.addEventListener('resize', function() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        // Buttons to toggle between auto and manual modes
+        document.getElementById('manual-mode').addEventListener('click', function() {
+            isAutoRotation = false; // Disable automatic rotation
+        });
+
+        document.getElementById('auto-mode').addEventListener('click', function() {
+            isAutoRotation = true; // Enable automatic rotation
+        });
+    </script>
+</body>
+</html>

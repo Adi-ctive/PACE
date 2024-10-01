@@ -1,0 +1,96 @@
+/* General styles for the signup page */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6D83F2, #A26BF5);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.signup-card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 40px 30px;
+    width: 400px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border 0.3s;
+}
+
+.input-group input:focus, .input-group select:focus {
+    border-color: #6D83F2;
+    outline: none;
+}
+
+.signup-button {
+    background-color: #6D83F2;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.signup-button:hover {
+    background-color: #5a70d1;
+    transform: translateY(-3px);
+}
+
+p.login-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+p.login-link a {
+    color: #6D83F2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+p.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    .signup-card {
+        width: 90%;
+        padding: 30px 20px;
+    }
+}

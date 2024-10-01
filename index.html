@@ -3,73 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Planets and Satellites</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Student Portal Home</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Planets and Satellites</h1>
-    </header>
-
-    <!-- Login Section -->
-    <section id="login" class="login-page">
-        <h2>Login</h2>
-        <form id="login-form" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <p id="login-message"></p>
-    </section>
-
-    <!-- Main content (hidden initially) -->
-    <div id="main-content" style="display: none;">
+    <header class="header animate-header">
+        <h1>Welcome to the Student Portal</h1>
         <nav>
             <ul>
-                <li><a href="#planets" onclick="openTab(event, 'planets')">Planets</a></li>
-                <li><a href="#satellites" onclick="openTab(event, 'satellites')">Satellites</a></li>
-                <li><a href="#teacher-section" onclick="openTab(event, 'teacher-section')">Teachers</a></li>
-                <li><a href="#student-section" onclick="openTab(event, 'student-section')">Students</a></li>
-                <li><a href="#about" onclick="openTab(event, 'about')">About</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="login.html" class="login-button">Login</a></li>
             </ul>
         </nav>
+    </header>
 
-        <section id="planets" class="tab-content">
-            <h2>Planets</h2>
-            <p>Information about planets goes here.</p>
+    <main class="main-content animate-content">
+        <section class="hero animate-hero">
+            <h2>Your Gateway to Learning</h2>
+            <p>Access your courses, resources, and manage your academic journey all in one place.</p>
+            <a href="login.html" class="cta-button">Get Started</a>
         </section>
+    </main>
 
-        <section id="satellites" class="tab-content">
-            <h2>Satellites</h2>
-            <p>Information about satellites goes here.</p>
-        </section>
-
-        <section id="teacher-section" class="tab-content">
-            <h2>Teacher Section</h2>
-            <p>This section is dedicated to teachers.</p>
-        </section>
-
-        <section id="student-section" class="tab-content">
-            <h2>Student Section</h2>
-            <p>Welcome students!</p>
-        </section>
-
-        <section id="about" class="tab-content">
-            <h2>About</h2>
-            <p>This website provides information about planets and satellites.</p>
-        </section>
-    </div>
-
-    <footer>
-        <p>&copy; 2024 Planets and Satellites. All rights reserved.</p>
+    <footer class="footer animate-footer">
+        <p>&copy; 2024 Student Portal. All rights reserved.</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>

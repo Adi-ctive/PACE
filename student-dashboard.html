@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="studentstyles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="header">
+            <h1>Student Dashboard</h1>
+        </header>
+        <div class="sidebar">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="storymode.html"><i class="fas fa-book"></i> Story Mode</a></li>
+                <li><a href="explore.html"><i class="fas fa-globe"></i> Explore</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2>Welcome Back!</h2>
+            <p>Select a mode to start your journey:</p>
+            <div class="button-container">
+                <button id="storyModeButton"><i class="fas fa-book-open"></i> Story Mode</button>
+                <button id="exploreButton"><i class="fas fa-binoculars"></i> Explore</button>
+            </div>
+            <div id="selectedMode"></div> <!-- This div will display the selected mode -->
+            <div class="card-container">
+                <div class="card">
+                    <h3>Upcoming Updates</h3>
+                    <p>Join us for our next workshop on web development!</p>
+                </div>
+                <div class="card">
+                    <h3>Resources</h3>
+                    <p>Access our library of learning materials.</p>
+                </div>
+                <div class="card">
+                    <h3>Announcements</h3>
+                    <p>Check out the latest updates and announcements.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="studentscript.js"></script>
+</body>
+</html>
