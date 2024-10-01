@@ -9,7 +9,7 @@ body {
 header {
     background-color: #333;
     color: white;
-    padding: 15px 0;
+    padding: 15px;
     text-align: center;
 }
 
@@ -39,7 +39,10 @@ label {
     margin-bottom: 5px;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"],
+input[type="password"],
+input[type="url"],
+input[type="file"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -67,32 +70,13 @@ button:hover {
     margin-top: 10px;
 }
 
-/* Hidden content */
+/* Tab content styles */
 .tab-content {
     display: none;
 }
 
 #main-content {
     padding: 20px;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background-color: #333;
-    color: white;
-    padding: 15px;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2em;
 }
 
 nav ul {
@@ -115,10 +99,13 @@ nav ul li a {
     padding: 10px;
 }
 
+nav ul li a.active {
+    background-color: #555;
+    border-radius: 4px;
+}
+
 nav ul li a:hover {
     background-color: #555;
-    padding: 10px;
-    border-radius: 4px;
 }
 
 section {
@@ -133,38 +120,6 @@ section {
 h2 {
     color: #333;
     text-align: center;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input[type="text"], input[type="url"], input[type="file"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #555;
 }
 
 footer {

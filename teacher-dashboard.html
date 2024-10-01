@@ -13,17 +13,16 @@
 
     <nav>
         <ul>
-            <li><a href="#courses">Manage Courses</a></li>
-            <li><a href="#assignments">Upload Assignments</a></li>
-            <li><a href="#resources">Class Resources</a></li>
-            <li><a href="index.html">Logout</a></li> <!-- Logout redirects to the login page -->
+            <li><a href="#courses" onclick="openTab(event, 'courses')">Manage Courses</a></li>
+            <li><a href="#assignments" onclick="openTab(event, 'assignments')">Upload Assignments</a></li>
+            <li><a href="#resources" onclick="openTab(event, 'resources')">Class Resources</a></li>
+            <li><a href="index.html">Logout</a></li>
         </ul>
     </nav>
 
     <section id="courses" class="tab-content">
         <h2>Manage Courses</h2>
         <p>Here, you can create, edit, or remove courses.</p>
-        <!-- Example form to add a new course -->
         <form id="course-form">
             <div class="form-group">
                 <label for="course-name">Course Name:</label>
