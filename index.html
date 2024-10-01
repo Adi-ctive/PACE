@@ -3,57 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planets and Satellites</title>
+    <title>Login - Planets and Satellites</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Planets and Satellites</h1>
-        <img src="images/earth.jpg" alt="Earth">
-
-        <nav>
-            <ul>
-                <li><a href="#planets">Planets</a></li>
-                <li><a href="#satellites">Satellites</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-        </nav>
     </header>
 
-    <section id="planets">
-        <h2>Planets</h2>
-        <div class="planet-list">
-            <div class="planet">
-                <h3>Earth</h3>
-                <p>Earth is the third planet from the Sun. It has one natural satellite, the Moon.</p>
+    <!-- Login Section (Home Page) -->
+    <section id="login" class="login-page">
+        <h2>Login</h2>
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
             </div>
-            <div class="planet">
-                <h3>Mars</h3>
-                <p>Mars is the fourth planet from the Sun. It has two moons: Phobos and Deimos.</p>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
             </div>
-            <!-- Add more planets as needed -->
-        </div>
+            <button type="submit">Login</button>
+        </form>
+        <p id="login-message"></p>
     </section>
 
-    <section id="satellites">
-        <h2>Satellites</h2>
-        <div class="satellite-list">
-            <div class="satellite">
-                <h3>The Moon</h3>
-                <p>The Moon is Earth's only natural satellite.</p>
-            </div>
-            <div class="satellite">
-                <h3>Phobos</h3>
-                <p>Phobos is the larger and closer of Mars' two natural satellites.</p>
-            </div>
-            <!-- Add more satellites as needed -->
-        </div>
-    </section>
+    <!-- Main content (hidden initially) -->
+    <div id="main-content" style="display: none;">
+        <nav>
+            <ul>
+                <li><a href="#planets" onclick="openTab(event, 'Planets')">Planets</a></li>
+                <li><a href="#satellites" onclick="openTab(event, 'Satellites')">Satellites</a></li>
+                <li><a href="#teacher-section" onclick="openTab(event, 'Teacher')">Teachers</a></li>
+                <li><a href="#student-section" onclick="openTab(event, 'Student')">Students</a></li>
+                <li><a href="#about" onclick="openTab(event, 'About')">About</a></li>
+            </ul>
+        </nav>
 
-    <section id="about">
-        <h2>About</h2>
-        <p>This website provides information about planets and their natural satellites in the solar system.</p>
-    </section>
+        <section id="planets" class="tab-content">
+            <h2>Planets</h2>
+            <!-- Content about planets here -->
+        </section>
+
+        <section id="satellites" class="tab-content">
+            <h2>Satellites</h2>
+            <!-- Content about satellites here -->
+        </section>
+
+        <section id="teacher-section" class="tab-content">
+            <h2>Teacher Section</h2>
+            <p>This section is dedicated to teachers.</p>
+        </section>
+
+        <section id="student-section" class="tab-content">
+            <h2>Student Section</h2>
+            <p>Welcome students!</p>
+        </section>
+
+        <section id="about" class="tab-content">
+            <h2>About</h2>
+            <p>This website provides information about planets and satellites.</p>
+        </section>
+    </div>
 
     <footer>
         <p>&copy; 2024 Planets and Satellites. All rights reserved.</p>
