@@ -3,14 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story Mode</title>
-    <link rel="stylesheet" href="studentstyles.css"> <!-- Reuse styles if desired -->
+    <title>Satellite PACE - Story Mode</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            color: #fff;
+            position: relative; /* Needed for positioning the video */
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Make the video cover the entire screen */
+            z-index: 1; /* Send the video behind the content */
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Dark transparent overlay for better visibility */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 800px;
+            animation: slideIn 1.5s ease-out forwards; /* Slide-in effect for the container */
+            z-index: 2; /* Ensure it's above the video */
+            position: absolute; /* Changed to absolute for better centering */
+            left: 50%; /* Center horizontally */
+            top: 50%; /* Center vertically */
+            transform: translate(-50%, -100%); /* Start off the screen above */
+        }
+
+        @keyframes slideIn {
+            from { transform: translate(-50%, -100%); opacity: 0; } /* Start above the viewport */
+            to { transform: translate(-50%, -50%); opacity: 1; } /* End at the middle of the screen */
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #00ffcc;
+            margin-bottom: 20px;
+            animation: zoomIn 1s ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 20px 0;
+            animation: fadeInText 2s ease-in;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .start-button {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
+
+        .start-button:hover {
+            background-color: #005bb5;
+            transform: scale(1.1);
+        }
+
+        /* Satellite Animation */
+        .satellite {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            width: 150px; /* Adjusted width for resizing */
+            height: auto; /* Maintain aspect ratio */
+            animation: float 4s ease-in-out infinite;
+            z-index: 2; /* Ensure it's above the video */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); } /* Reduced float height */
+            100% { transform: translateY(0); }
+        }
+
+        /* Speech Bubble for Satellite */
+        .speech-bubble {
+            position: absolute;
+            right: 240px;
+            bottom: 40px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly less transparent for more visibility */
+            color: #000;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 1em;
+            max-width: 250px;
+            z-index: 1;
+            animation: fadeInSpeech 3s ease-in-out, bounce 1s infinite; /* Added bounce animation */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
+
+        @keyframes fadeInSpeech {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px); /* Bounce height */
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Story Mode!</h1>
-        <p>This is where the story will unfold...</p>
-        <a href="student-dashboard.html" class="back-button">Back to Dashboard</a>
+
+    <!-- Video Background -->
+    <video class="video-background" autoplay loop muted>
+        <source src="images/earth.mp4" type="video/mp4"> <!-- Replace with the correct path to your video -->
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Animated Satellite with Speech Bubble -->
+    <img src="images/satellite_tutor1.png" 
+         alt="Satellite PACE" class="satellite">
+
+    <div class="speech-bubble" id="satellite-bubble">
+        "Hello! I’m PACE, the satellite that helps scientists monitor the Earth's oceans and atmosphere. Let’s explore together!"
     </div>
+
+    <div class="container" id="intro">
+        <h1>Welcome to the PACE Mission!</h1>
+        <p>You are aboard the space station, assisting NASA scientists in monitoring Earth’s oceans and atmosphere. Your primary task is to help operate the PACE satellite, which orbits Earth and gathers crucial data on the health of our planet.</p>
+        <p>Are you ready to start your adventure?</p>
+        <a href="https://docs.google.com/presentation/d/17KpscpkWQVB-VkAKkx2CJZg8dTKKKa8p/edit?usp=drive_link&ouid=111147901132114227574&rtpof=true&sd=true#slide=id.PPT" class="start-button" target="_blank">Start</a> <!-- Updated Link to your PPT -->
+    </div>
+
 </body>
 </html>
