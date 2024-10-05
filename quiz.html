@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="quizstyles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 80%;
+            margin: auto;
+        }
+        .character {
+            width: 100px;
+            animation: shake 0.5s infinite;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px); }
+            25% { transform: translate(-1px, -2px); }
+            50% { transform: translate(-3px, 0px); }
+            75% { transform: translate(3px, 2px); }
+            100% { transform: translate(1px, -1px); }
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .popup h3 {
+            margin: 0;
+        }
+        .popup button {
+            margin-top: 10px;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        .timer {
+            font-weight: bold;
+            margin-top: 10px;
+            color: red;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Phytoplankton Quiz</h1>
+        <img src="animated_character.gif" alt="Character" class="character"> <!-- Replace with your animated character -->
+        <button id="startQuizButton">Start Quiz</button>
+        <div class="timer" id="timer">Time Left: 30 seconds</div> <!-- Timer display -->
+        <div class="result" id="resultDisplay"></div> <!-- Area to display results -->
+    </div>
+
+    <div id="overlay"></div>
+    <div class="popup" id="quizPopup">
+        <h3 id="questionText">Question will be displayed here!</h3>
+        <p id="quizOptions"></p>
+        <button id="closePopup">Close</button>
+    </div>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "What are phytoplankton?",
+                options: ["Plant-like organisms", "Animal-like organisms", "Fungi", "Bacteria"],
+                correct: "Plant-like organisms"
+            },
+            {
+                question: "Why are phytoplankton important?",
+                options: ["They produce oxygen", "They are harmful", "They consume energy", "None of the above"],
+                correct: "They produce oxygen"
+            },
+            // Add more questions as needed
+        ];
+
+        let timer;
+        let timeLeft = 30;
+        let score = 0; // Initialize score
+
+        document.getElementById('startQuizButton').onclick = function() {
+            score = 0; // Reset score
+            document.getElementById('resultDisplay').innerText = ''; // Clear previous results
+            showQuestion(0);
+        };
+
+        function startTimer() {
+            timeLeft = 30; // Reset timer
+            document.getElementById('timer').style.display = 'block'; // Show timer
+            timer = setInterval(function() {
+                timeLeft--;
+                document.getElementById('timer').innerText = `Time Left: ${timeLeft} seconds`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('quizPopup').style.display = 'none';
+                    document.getElementById('overlay').style.display = 'none';
+                    showQuestion(currentQuestionIndex + 1); // Show next question
+                }
+            }, 1000);
+        }
+
+        let currentQuestionIndex = 0;
+
+        function showQuestion(index) {
+            if (index < quizQuestions.length) {
+                const popup = document.getElementById('quizPopup');
+                const overlay = document.getElementById('overlay');
+                const question = quizQuestions[index];
+
+                document.getElementById('questionText').innerText = question.question;
+                document.getElementById('quizOptions').innerHTML = question.options.map(option => `<button class="option">${option}</button>`).join(' ');
+
+                popup.style.display = 'block';
+                overlay.style.display = 'block';
+
+                startTimer(); // Start the timer for each question
+
+                const optionButtons = document.querySelectorAll('.option');
+                optionButtons.forEach((button, i) => {
+                    button.onclick = () => handleOptionClick(i, index);
+                });
+
+                currentQuestionIndex = index; // Update current question index
+            } else {
+                endQuiz(); // End the quiz if no more questions
+            }
+        }
+
+        function handleOptionClick(selectedIndex, questionIndex) {
+            const selectedOption = quizQuestions[questionIndex].options[selectedIndex];
+            if (selectedOption === quizQuestions[questionIndex].correct) {
+                score++; // Increment score for correct answer
+            }
+            clearInterval(timer); // Clear the timer
+            document.getElementById('quizPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            showQuestion(questionIndex + 1); // Show next question
+        }
+
+        function endQuiz() {
+            document.getElementById('quizPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('timer').style.display = 'none'; // Hide timer
+            
+            // Display the result on the page instead of alert
+            const resultDisplay = document.getElementById('resultDisplay');
+            resultDisplay.innerText = `Quiz Over! Your score is ${score} out of ${quizQuestions.length}.`;
+
+            // Save the score in localStorage
+            localStorage.setItem('quizScore', score);
+        }
+
+        document.getElementById('closePopup').onclick = function() {
+            document.getElementById('quizPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            clearInterval(timer); // Clear the timer
+        };
+    </script>
+</body>
+</html>

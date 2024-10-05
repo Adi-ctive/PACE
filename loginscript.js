@@ -1,17 +1,34 @@
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();  // Prevent default form submission
 
-    // Get the selected role
-    const role = document.getElementById('role').value;
-    console.log("Selected role:", role);  // Log the selected role for debugging
+    // Get the email and password
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-    // Redirect based on role
-    if (role === 'student') {
-        window.location.href = 'student-dashboard.html';  // Redirect to student dashboard
-    } else if (role === 'teacher') {
-        window.location.href = 'teacher-dashboard.html';  // Redirect to teacher dashboard
-    } else {
-        console.error("No valid role selected.");  // Error if no valid role is selected
+    // Attempt login using the backend
+    try {
+        const response = await fetch('http://localhost:5000/api/login', {  // Ensure correct backend URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),  // Send email and password for login
+        });
+
+        const data = await response.json(); // Parse the response as JSON
+
+        if (response.ok) {
+            console.log('Login successful:', data.user);  // Log user data
+
+            // Redirect to a dashboard or main page upon successful login
+            window.location.href = 'dashboard.html';  // Replace with your actual dashboard URL
+        } else {
+            console.error('Login failed:', data.message);
+            alert(data.message);  // Show error message to the user
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred during login');
     }
 });
 

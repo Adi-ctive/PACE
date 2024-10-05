@@ -3,52 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="signup.css">  <!-- Separate CSS for a unique design -->
+    <title>Username Form</title>
+    <link rel="stylesheet" href="sign.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="signup-container">
         <div class="signup-card">
-            <h2>Create Your Account</h2>
-            <form id="signupForm">
-                <!-- Name Field -->
+            <h2>Enter Your Username</h2>
+            <form id="usernameForm">
+                <!-- Username Field -->
                 <div class="input-group">
-                    <input type="text" id="name" name="name" placeholder="Name" required>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
                 </div>
 
-                <!-- Email Field -->
-                <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                </div>
-
-                <!-- Password Field -->
-                <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                </div>
-
-                <!-- Confirm Password Field -->
-                <div class="input-group">
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-                </div>
-
-                <!-- Role Selection -->
-                <div class="input-group">
-                    <select id="role" name="role" required>
-                        <option value="" disabled selected>Sign up as</option>
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                    </select>
-                </div>
-
-                <!-- Sign Up Button -->
-                <button type="submit" class="signup-button">Sign Up</button>
+                <!-- Submit Button -->
+                <button type="submit" class="signup-button">Submit</button>
             </form>
 
-            <!-- Already have an account? -->
-            <p class="login-link">Already have an account? <a href="login.html">Log in</a></p>
+            <!-- Success message placeholder -->
+            <div id="successMessage" class="success-message"></div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('usernameForm').onsubmit = function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            const username = document.getElementById('username').value;
+
+            // Basic validation
+            if (!username) {
+                alert("Please enter a username!");
+                return;
+            }
+
+            // Store the username in localStorage
+            localStorage.setItem('username', username);
+
+            // Redirect to the student dashboard
+            window.location.href = 'student-dashboard.html';
+        };
+    </script>
 
     <script src="signupscript.js"></script>
 </body>

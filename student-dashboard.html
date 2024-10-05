@@ -6,7 +6,102 @@
     <title>Student Dashboard</title>
     <link rel="stylesheet" href="studentstyles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Style for the news container */
+        .news-container {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .news-item {
+            margin-bottom: 10px;
+        }
+        /* Space themed background */
+        body {
+            background-image: url('space-background.jpg'); /* Add your space background image */
+            background-size: cover;
+            color: white; /* Light text color for visibility */
+            font-family: 'Roboto', sans-serif;
+        }
+        .dashboard-container {
+            background: rgba(0, 0, 0, 0.7); /* Dark background for dashboard */
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1); /* Slightly transparent white for cards */
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05); /* Scale up effect on hover */
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar {
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Space between buttons */
+        }
+        /* Centering the welcome message */
+        #welcomeMessage {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.5rem;
+        }
+        /* Centering the select mode text */
+        #selectModeText {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            padding-top: 60px; /* Location of the box */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px; /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
@@ -17,35 +112,132 @@
             <ul>
                 <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="storymode.html"><i class="fas fa-book"></i> Story Mode</a></li>
-                <li><a href="explore.html"><i class="fas fa-globe"></i> Explore</a></li>
                 <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#" id="settingsButton"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </div>
         <div class="content">
-            <h2>Welcome Back!</h2>
-            <p>Select a mode to start your journey:</p>
+            <h2 id="welcomeMessage">Welcome!</h2>
+            <p id="selectModeText">Select a mode to start your journey:</p>
             <div class="button-container">
                 <button id="storyModeButton"><i class="fas fa-book-open"></i> Story Mode</button>
-                <button id="exploreButton"><i class="fas fa-binoculars"></i> Explore</button>
+                <button id="exploreButton"><i class="fas fa-globe"></i> Explore</button> <!-- New Explore button -->
             </div>
-            <div id="selectedMode"></div> <!-- This div will display the selected mode -->
+            <div id="selectedMode"></div>
             <div class="card-container">
-                <div class="card">
+                <div class="card" id="updateCard">
                     <h3>Upcoming Updates</h3>
                     <p>Join us for our next workshop on web development!</p>
                 </div>
-                <div class="card">
+                <div class="card" id="resourceCard">
                     <h3>Resources</h3>
                     <p>Access our library of learning materials.</p>
                 </div>
-                <div class="card">
-                    <h3>Announcements</h3>
-                    <p>Check out the latest updates and announcements.</p>
+                <div class="card" id="eventsCard">
+                    <h3>Events</h3>
+                    <p>Explore upcoming events and activities.</p>
                 </div>
+            </div>
+            <div class="news-container" id="newsContainer">
+                <h3>Latest News</h3>
+                <div id="newsContent"></div>
             </div>
         </div>
     </div>
+
+    <!-- Modal for Rename & Reset -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Rename User</h2>
+            <label for="renameInput">New Name:</label>
+            <input type="text" id="renameInput" placeholder="Enter new name" />
+            <button id="renameButton">Rename</button>
+            <br/><br/>
+            <button id="resetScoreButton">Reset Score</button>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve the username and score from localStorage
+        let username = localStorage.getItem('username');
+        let score = localStorage.getItem('score') || 0; // Default score is 0
+
+        // If the username exists, display it in the welcome message
+        if (username) {
+            document.getElementById('welcomeMessage').innerText = `Welcome back, ${username}!`;
+        }
+
+        // Add event listener to the Update Card
+        document.getElementById('updateCard').onclick = function() {
+            window.location.href = 'https://pace.oceansciences.org/news.htm'; // Redirect to PACE news page
+        };
+
+        // Add event listener to the Resource Card
+        document.getElementById('resourceCard').onclick = function() {
+            window.location.href = 'https://pace.oceansciences.org/documents.htm'; // Redirect to PACE resources page
+        };
+
+        // Add event listener to the Events Card
+        document.getElementById('eventsCard').onclick = function() {
+            window.location.href = 'https://pace.oceansciences.org/events.htm'; // Redirect to PACE events page
+        };
+
+        // Redirect to Story Mode when Story Mode button is clicked
+        document.getElementById('storyModeButton').onclick = function() {
+            window.location.href = 'storymode.html'; // Redirect to Story Mode
+        };
+
+        // Redirect to EarthPACE.html when Explore button is clicked
+        document.getElementById('exploreButton').onclick = function() {
+            window.location.href = 'EarthPACE.html'; // Redirect to EarthPACE
+        };
+
+        // Get the modal
+        const modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        const settingsButton = document.getElementById("settingsButton");
+
+        // Get the <span> element that closes the modal
+        const span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the settings button, open the modal 
+        settingsButton.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Rename functionality
+        document.getElementById('renameButton').onclick = function() {
+            const newName = document.getElementById('renameInput').value;
+            if (newName) {
+                username = newName; // Update username
+                localStorage.setItem('username', username); // Save new username
+                document.getElementById('welcomeMessage').innerText = `Welcome back, ${username}!`; // Update welcome message
+                document.getElementById('renameInput').value = ''; // Clear input
+                modal.style.display = "none"; // Close modal
+            }
+        };
+
+        // Reset score functionality
+        document.getElementById('resetScoreButton').onclick = function() {
+            localStorage.removeItem('score'); // Remove score from localStorage
+            score = 0; // Reset local score variable
+            alert('Score has been reset!'); // Optionally, you could replace this with a message on the page
+        };
+    </script>
 
     <script src="studentscript.js"></script>
 </body>

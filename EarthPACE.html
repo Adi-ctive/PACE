@@ -50,6 +50,27 @@
             pointer-events: none;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better readability */
         }
+        #dropdown {
+            position: absolute;
+            top: 100px; /* Position it below the controls */
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            display: none; /* Hide initially */
+            max-width: 300px; /* Limit width */
+            z-index: 10; /* Ensure it appears above other elements */
+        }
+        #dropdown h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        #dropdown p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -58,10 +79,20 @@
         <button id="auto-mode"><i class="fas fa-play"></i> Enjoy</button>
     </div>
     <div id="ocean-name">Exploration Hub</div> <!-- Added a title for the hub -->
-    
+    <div id="dropdown"></div> <!-- Dropdown menu for ocean information -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
+        // Ocean data for the PACE report
+        const oceanData = {
+            "Pacific Ocean": "The PACE report indicates significant changes in biodiversity and marine pollution levels.",
+            "Atlantic Ocean": "The PACE report highlights the effects of climate change on fish populations.",
+            "Indian Ocean": "The PACE report discusses rising sea temperatures and their impact on coral reefs.",
+            "Arctic Ocean": "The PACE report reveals the rapid melting of ice and its implications for global sea levels.",
+            "Southern Ocean": "The PACE report outlines challenges faced by penguin populations due to habitat loss."
+        };
+
         // Create a scene
         const scene = new THREE.Scene();
 
@@ -181,6 +212,36 @@
         document.getElementById('auto-mode').addEventListener('click', function() {
             isAutoRotation = true; // Enable automatic rotation
         });
+
+        // Detect clicks on the model and show dropdown
+        document.addEventListener('click', (event) => {
+            // Get the mouse position in normalized device coordinates
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+            // Update the raycaster with the camera and mouse position
+            raycaster.setFromCamera(mouse, camera);
+
+            // Check for intersections with the model
+            const intersects = raycaster.intersectObject(model, true); // Use true to check all descendants
+            if (intersects.length > 0) {
+                const oceanName = intersects[0].object.name; // Assume the model has the ocean name as a property
+                showDropdown(oceanName);
+            } else {
+                hideDropdown(); // Hide dropdown if no intersection
+            }
+        });
+
+        function showDropdown(oceanName) {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.style.display = 'block'; // Show dropdown
+            dropdown.innerHTML = `<h3>${oceanName}</h3><p>${oceanData[oceanName] || "No information available."}</p>`; // Set content
+        }
+
+        function hideDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.style.display = 'none'; // Hide dropdown
+        }
     </script>
 </body>
 </html>

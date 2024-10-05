@@ -1,9 +1,9 @@
-/* General styles for the signup page */
+/* signup.css */
+
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #6D83F2, #A26BF5);
+    background: linear-gradient(to right, #6a11cb, #2575fc);
     margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,82 +15,100 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
 }
 
 .signup-card {
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 40px 30px;
-    width: 400px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in;
+    width: 400px; /* Set a width for the card */
 }
 
+/* Title */
 h2 {
-    font-size: 28px;
-    color: #333;
+    text-align: center;
     margin-bottom: 20px;
-    font-weight: 600;
+    color: #333;
 }
 
+/* Input Group Styles */
 .input-group {
     margin-bottom: 20px;
+    position: relative;
 }
 
-.input-group input, .input-group select {
+/* Input and Select Styles */
+input,
+select {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 16px;
-    background-color: #f9f9f9;
-    transition: border 0.3s;
+    transition: border-color 0.3s, transform 0.3s;
 }
 
-.input-group input:focus, .input-group select:focus {
-    border-color: #6D83F2;
-    outline: none;
+/* Focus styles */
+input:focus,
+select:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+    transform: scale(1.02);
 }
 
+/* Button Styles */
 .signup-button {
-    background-color: #6D83F2;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
     width: 100%;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 12px;
+    background-color: #6a11cb;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
+/* Button hover animation */
 .signup-button:hover {
-    background-color: #5a70d1;
-    transform: translateY(-3px);
+    background-color: #2575fc;
+    transform: scale(1.05);
 }
 
-p.login-link {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #555;
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-p.login-link a {
-    color: #6D83F2;
+/* Link Styles */
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+    color: #6a11cb;
+}
+
+.login-link a {
+    color: #6a11cb;
     text-decoration: none;
     font-weight: 500;
 }
 
-p.login-link a:hover {
+.login-link a:hover {
     text-decoration: underline;
 }
 
-/* Mobile responsive */
-@media (max-width: 600px) {
-    .signup-card {
-        width: 90%;
-        padding: 30px 20px;
-    }
+/* Success message styles */
+.success-message {
+    text-align: center;
+    margin-top: 20px;
+    color: #4CAF50; /* Green color for success */
 }
