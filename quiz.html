@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Quizizz Style Quiz</title>
     <link rel="stylesheet" href="quizstyles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f0f8ff;
+            background-color: #f0f4f8;
             text-align: center;
             padding: 50px;
         }
         .quiz-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            width: 80%;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
             margin: auto;
+            position: relative;
         }
         .character {
             width: 100px;
+            margin-bottom: 20px;
             animation: shake 0.5s infinite;
         }
         @keyframes shake {
@@ -36,16 +39,21 @@
             display: none;
             position: fixed;
             left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
+            bottom: 20px; /* Positioned 20px from the bottom */
+            transform: translate(-50%, 0); /* Center horizontally */
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             z-index: 1000;
+            width: 90%;
+            max-width: 500px;
         }
         .popup h3 {
             margin: 0;
+            font-weight: 700;
+            font-size: 1.5em;
+            color: #333;
         }
         .popup button {
             margin-top: 10px;
@@ -63,12 +71,40 @@
         .timer {
             font-weight: bold;
             margin-top: 10px;
-            color: red;
+            color: #f44336;
         }
         .result {
             margin-top: 20px;
             font-weight: bold;
             font-size: 1.5em;
+        }
+        .option {
+            display: inline-block;
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px; /* Rounded corners */
+            font-size: 1.1em;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s;
         }
     </style>
 </head>
@@ -76,16 +112,18 @@
     <div class="quiz-container">
         <h1>Phytoplankton Quiz</h1>
         <img src="animated_character.gif" alt="Character" class="character"> <!-- Replace with your animated character -->
-        <button id="startQuizButton">Start Quiz</button>
-        <div class="timer" id="timer">Time Left: 30 seconds</div> <!-- Timer display -->
+        <button id="startQuizButton" class="option">Start Quiz</button>
+        <div class="timer" id="timer" style="display:none;">Time Left: 15 seconds</div> <!-- Timer display -->
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
         <div class="result" id="resultDisplay"></div> <!-- Area to display results -->
     </div>
-
     <div id="overlay"></div>
     <div class="popup" id="quizPopup">
         <h3 id="questionText">Question will be displayed here!</h3>
         <p id="quizOptions"></p>
-        <button id="closePopup">Close</button>
+        <button id="closePopup" class="option">Close</button>
     </div>
 
     <script>
@@ -100,36 +138,92 @@
                 options: ["They produce oxygen", "They are harmful", "They consume energy", "None of the above"],
                 correct: "They produce oxygen"
             },
-            // Add more questions as needed
+            {
+                question: "What type of organisms are phytoplankton primarily classified as?",
+                options: ["Bacteria", "Fungi", "Plants", "Animals"],
+                correct: "Plants"
+            },
+            {
+                question: "What is a significant factor affecting phytoplankton growth?",
+                options: ["Temperature", "Salinity", "Nutrient availability", "All of the above"],
+                correct: "All of the above"
+            },
+            {
+                question: "Which of the following can cause phytoplankton blooms?",
+                options: ["Nutrient runoff", "Warm water", "Sunlight", "All of the above"],
+                correct: "All of the above"
+            },
+            {
+                question: "What color do phytoplankton typically exhibit due to chlorophyll?",
+                options: ["Red", "Yellow", "Green", "Blue"],
+                correct: "Green"
+            },
+            {
+                question: "What is the main component of phytoplankton cell walls?",
+                options: ["Cellulose", "Chitin", "Silica", "Protein"],
+                correct: "Silica"
+            },
+            {
+                question: "What term describes the tiny, photosynthetic organisms in the ocean?",
+                options: ["Zooplankton", "Phytoplankton", "Bacterioplankton", "Macrophytes"],
+                correct: "Phytoplankton"
+            },
+            {
+                question: "Phytoplankton are responsible for what percentage of global oxygen production?",
+                options: ["10%", "25%", "50%", "60%"],
+                correct: "50%"
+            },
+            {
+                question: "What is the ecological role of phytoplankton in aquatic ecosystems?",
+                options: ["Producers", "Consumers", "Decomposers", "All of the above"],
+                correct: "Producers"
+            },
+            {
+                question: "Which of the following is a type of harmful phytoplankton?",
+                options: ["Diatoms", "Dinoflagellates", "Cyanobacteria", "All of the above"],
+                correct: "Dinoflagellates"
+            },
+            {
+                question: "What is the primary way phytoplankton reproduce?",
+                options: ["Budding", "Binary fission", "Spore formation", "Fragmentation"],
+                correct: "Binary fission"
+            },
+            {
+                question: "How do changes in climate impact phytoplankton populations?",
+                options: ["Increase in water temperature", "Changes in nutrient availability", "Ocean acidification", "All of the above"],
+                correct: "All of the above"
+            }
         ];
 
         let timer;
-        let timeLeft = 30;
+        let timeLeft;
         let score = 0; // Initialize score
+        let currentQuestionIndex = 0; // Initialize current question index
 
         document.getElementById('startQuizButton').onclick = function() {
             score = 0; // Reset score
             document.getElementById('resultDisplay').innerText = ''; // Clear previous results
-            showQuestion(0);
+            currentQuestionIndex = 0; // Reset current question index
+            showQuestion(currentQuestionIndex); // Show the first question
         };
 
         function startTimer() {
-            timeLeft = 30; // Reset timer
-            document.getElementById('timer').style.display = 'block'; // Show timer
+            timeLeft = 15; // Reset timer to 15 seconds
+            const timerDisplay = document.getElementById('timer');
+            timerDisplay.style.display = 'block'; // Show timer
+            timerDisplay.innerText = `Time Left: ${timeLeft} seconds`; // Display initial time
+
+            clearInterval(timer); // Clear any existing timer
             timer = setInterval(function() {
                 timeLeft--;
-                document.getElementById('timer').innerText = `Time Left: ${timeLeft} seconds`;
+                timerDisplay.innerText = `Time Left: ${timeLeft} seconds`;
 
                 if (timeLeft <= 0) {
                     clearInterval(timer);
-                    document.getElementById('quizPopup').style.display = 'none';
-                    document.getElementById('overlay').style.display = 'none';
-                    showQuestion(currentQuestionIndex + 1); // Show next question
+                    handleOptionClick(-1, currentQuestionIndex); // Automatically move to the next question if time runs out
                 }
             }, 1000);
         }
-
-        let currentQuestionIndex = 0;
 
         function showQuestion(index) {
             if (index < quizQuestions.length) {
@@ -150,14 +244,15 @@
                     button.onclick = () => handleOptionClick(i, index);
                 });
 
-                currentQuestionIndex = index; // Update current question index
+                // Update progress bar
+                document.getElementById('progressFill').style.width = `${((index + 1) / quizQuestions.length) * 100}%`;
             } else {
                 endQuiz(); // End the quiz if no more questions
             }
         }
 
         function handleOptionClick(selectedIndex, questionIndex) {
-            const selectedOption = quizQuestions[questionIndex].options[selectedIndex];
+            const selectedOption = selectedIndex === -1 ? null : quizQuestions[questionIndex].options[selectedIndex];
             if (selectedOption === quizQuestions[questionIndex].correct) {
                 score++; // Increment score for correct answer
             }
@@ -168,6 +263,7 @@
         }
 
         function endQuiz() {
+            clearInterval(timer); // Clear the timer when the quiz ends
             document.getElementById('quizPopup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('timer').style.display = 'none'; // Hide timer
