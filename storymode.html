@@ -12,7 +12,7 @@
             overflow: hidden;
             height: 100vh;
             color: #fff;
-            position: relative; /* Needed for positioning the video */
+            position: relative;
         }
 
         .video-background {
@@ -21,27 +21,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Make the video cover the entire screen */
-            z-index: 1; /* Send the video behind the content */
+            object-fit: cover;
+            z-index: 1;
         }
 
         .container {
-            background-color: rgba(0, 0, 0, 0.7); /* Dark transparent overlay for better visibility */
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 40px;
             border-radius: 15px;
-            text-align: center;
-            max-width: 800px;
-            animation: slideIn 1.5s ease-out forwards; /* Slide-in effect for the container */
-            z-index: 2; /* Ensure it's above the video */
-            position: absolute; /* Changed to absolute for better centering */
-            left: 50%; /* Center horizontally */
-            top: 50%; /* Center vertically */
-            transform: translate(-50%, -100%); /* Start off the screen above */
+            text-align: left;
+            max-width: 600px;
+            animation: slideIn 1.5s ease-out forwards;
+            z-index: 2;
+            position: absolute;
+            left: 30%; /* Adjusted for a better position */
+            top: 50%;
+            transform: translate(0, -50%);
         }
 
         @keyframes slideIn {
-            from { transform: translate(-50%, -100%); opacity: 0; } /* Start above the viewport */
-            to { transform: translate(-50%, -50%); opacity: 1; } /* End at the middle of the screen */
+            from { transform: translate(0, -100%); opacity: 0; }
+            to { transform: translate(0, -50%); opacity: 1; }
         }
 
         h1 {
@@ -51,23 +51,13 @@
             animation: zoomIn 1s ease-in-out;
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
         p {
             font-size: 1.2em;
             margin: 20px 0;
             animation: fadeInText 2s ease-in;
         }
 
-        @keyframes fadeInText {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .start-button {
+        .start-button, .quiz-button {
             display: inline-block;
             margin: 10px;
             padding: 12px 25px;
@@ -79,10 +69,10 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
             cursor: pointer;
             border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .start-button:hover {
+        .start-button:hover, .quiz-button:hover {
             background-color: #005bb5;
             transform: scale(1.1);
         }
@@ -90,9 +80,9 @@
         /* Satellite Animation */
         .satellite {
             position: absolute;
-            bottom: 10px;
-            right: 20px;
-            width: 150px; /* Adjusted width for resizing */
+            top: 20px;  /* Move to the top */
+            left: 20px; /* Move to the left */
+            width: 150px; /* Adjust width as needed */
             height: auto; /* Maintain aspect ratio */
             animation: float 4s ease-in-out infinite;
             z-index: 2; /* Ensure it's above the video */
@@ -100,25 +90,26 @@
 
         @keyframes float {
             0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); } /* Reduced float height */
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0); }
         }
 
         /* Speech Bubble for Satellite */
         .speech-bubble {
-            position: absolute;
-            right: 240px;
-            bottom: 40px;
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly less transparent for more visibility */
-            color: #000;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 1em;
-            max-width: 250px;
-            z-index: 1;
-            animation: fadeInSpeech 3s ease-in-out, bounce 1s infinite; /* Added bounce animation */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-        }
+    position: absolute;
+    top: 190px; /* Move down from the satellite */
+    left: 20px; /* Keep aligned with satellite on the left */
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1em;
+    max-width: 250px;
+    z-index: 1;
+    animation: fadeInSpeech 3s ease-in-out, bounce 1s infinite; /* Added bounce animation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
 
         @keyframes fadeInSpeech {
             from { opacity: 0; }
@@ -142,7 +133,7 @@
 
     <!-- Video Background -->
     <video class="video-background" autoplay loop muted>
-        <source src="images/earth.mp4" type="video/mp4"> <!-- Replace with the correct path to your video -->
+        <source src="images/earth.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
@@ -158,7 +149,18 @@
         <h1>Welcome to the PACE Mission!</h1>
         <p>You are aboard the space station, assisting NASA scientists in monitoring Earth’s oceans and atmosphere. Your primary task is to help operate the PACE satellite, which orbits Earth and gathers crucial data on the health of our planet.</p>
         <p>Are you ready to start your adventure?</p>
-        <a href="https://docs.google.com/presentation/d/17KpscpkWQVB-VkAKkx2CJZg8dTKKKa8p/edit#slide=id.p1" class="start-button" target="_blank">Start</a> <!-- Updated Link to your PPT -->
+
+        <!-- Embed your project video -->
+        <video width="100%" height="auto" controls>
+            <source src="images/story.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- Home Button -->
+        <a href="index.html" class="start-button">Home</a>
+
+        <!-- Quiz Button -->
+        <a href="quiz.html" class="quiz-button">Quiz</a>
     </div>
 
 </body>

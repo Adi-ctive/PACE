@@ -3,53 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="profilestyles.css"> <!-- You can create a separate CSS file for styles -->
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="profilestyles.css"> <!-- Use this for external styles if needed -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('images/back.jpg'); /* Add your space background image */
+    background-size: cover;
+    display: flex; /* Use Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Take full height of the viewport */
+    animation: fadeIn 1s; /* Fade-in animation */
+}
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .profile-container {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: auto;
+    max-width: 1200px; /* Increased max-width */
+    margin: 0 auto;
+    padding: 50px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s; /* Slide-in animation */
+}
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        h1 {
+        .profile-container img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
             margin-bottom: 20px;
-            color: #333;
+            transition: transform 0.3s; /* Animation for image hover */
         }
 
-        .score {
-            font-size: 1.5em;
-            color: #1a73e8;
+        .profile-container img:hover {
+            transform: scale(1.1); /* Scale effect on hover */
+        }
+
+        .profile-container h1 {
+            font-size: 2.5em;
+            margin: 10px 0;
+            color: #fffbfb;
+        }
+
+        .profile-container p {
+            font-size: 1.2em;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .profile-container .hire-me-btn {
+            display: inline-block;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Add transform transition */
+        }
+
+        .profile-container .hire-me-btn:hover {
+            background-color: #e04343;
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .profile-container h1 {
+                font-size: 2em;
+            }
+
+            .profile-container p {
+                font-size: 1em;
+            }
+
+            .profile-container .hire-me-btn {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
+
     <div class="profile-container">
-        <h1>User Profile</h1>
-        <p id="userName"></p>
-        <p class="score" id="userScore"></p>
+        <!-- Profile Picture -->
+        <img src="images/profile.jpg" alt="Profile Picture">
+
+        <!-- Profile Info -->
+        <h1 id="userName">Kenedy Jackson</h1>
+        <p id="userScore">Score: 0</p> <!-- Updated here to add an ID -->
+
+        <!-- Hire Me Button -->
+        <a href="student-dashboard.html" class="hire-me-btn">Back</a>
     </div>
 
     <script>
         // Retrieve the username and score from localStorage
-        const username = localStorage.getItem('username');
-        const score = localStorage.getItem('quizScore');
+        const username = localStorage.getItem('username') || 'Kenedy Jackson'; 
+        const score = localStorage.getItem('score') || 0; // Default score is 0
 
-        // Display the username and score
-        document.getElementById('userName').innerText = `Name: ${username || 'Guest'}`;
-        document.getElementById('userScore').innerText = `Score: ${score || '0'}`;
+        // Update the HTML elements with the retrieved data
+        document.getElementById('userName').innerText = username;
+        document.getElementById('userScore').innerText = `Score: ${score}`; // Update score display
     </script>
 </body>
 </html>
