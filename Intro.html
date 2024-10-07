@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite PACE - Story Mode</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            color: #fff;
+            position: relative;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: left;
+            max-width: 600px;
+            animation: slideIn 1.5s ease-out forwards;
+            z-index: 2;
+            position: absolute;
+            left: 30%; /* Adjusted for a better position */
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+        @keyframes slideIn {
+            from { transform: translate(0, -100%); opacity: 0; }
+            to { transform: translate(0, -50%); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #00ffcc;
+            margin-bottom: 20px;
+            animation: zoomIn 1s ease-in-out;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 20px 0;
+            animation: fadeInText 2s ease-in;
+        }
+
+        .start-button, .quiz-button {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .start-button:hover, .quiz-button:hover {
+            background-color: #005bb5;
+            transform: scale(1.1);
+        }
+
+        /* Satellite Animation */
+        .satellite {
+            position: absolute;
+            top: 20px;  /* Move to the top */
+            left: 20px; /* Move to the left */
+            width: 150px; /* Adjust width as needed */
+            height: auto; /* Maintain aspect ratio */
+            animation: float 4s ease-in-out infinite;
+            z-index: 2; /* Ensure it's above the video */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Speech Bubble for Satellite */
+        .speech-bubble {
+    position: absolute;
+    top: 190px; /* Move down from the satellite */
+    left: 20px; /* Keep aligned with satellite on the left */
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1em;
+    max-width: 250px;
+    z-index: 1;
+    animation: fadeInSpeech 3s ease-in-out, bounce 1s infinite; /* Added bounce animation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+
+        @keyframes fadeInSpeech {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px); /* Bounce height */
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video Background -->
+    <video class="video-background" autoplay loop muted>
+        <source src="images/earth.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Animated Satellite with Speech Bubble -->
+    <img src="images/satellite_tutor1.png" 
+         alt="Satellite PACE" class="satellite">
+
+    <div class="speech-bubble" id="satellite-bubble">
+        "Hello! I’m PACE, the satellite that helps scientists monitor the Earth's oceans and atmosphere. Let’s explore together!"
+    </div>
+
+    <div class="container" id="intro">
+        <h1>Welcome to the PACE Mission!</h1>
+        <p>We poured our heart and soul in this mission to make it easier for students and any age groups to learn about the Earth's oceans and atmosphere.</p>
+        <p>Are you ready to start your adventure?</p>
+
+        <!-- Embed your project video -->
+        <video width="100%" height="auto" controls>
+            <source src="images/paceintro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- Home Button -->
+        <a href="index.html" class="start-button">Home</a>
+
+    </div>
+
+</body>
+</html>
