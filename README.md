@@ -72,6 +72,19 @@ Southern, each with its own content.
 
 ---
 
+## 3D models
+
+| Model | Where it lives |
+|---|---|
+| The PACE satellite | [open in Tinkercad](https://www.tinkercad.com/things/4S60R3KuN4U-pace?sharecode=TNSbNwB4ZjbpQ8VZwzod43cCIkZzWN1vU_NQl3UIQEw) |
+| Earth, used by the exploration hub | `models/earth.glb` in this repo |
+
+The satellite was modelled in Tinkercad on **26 September 2024**, nine days
+before the hackathon weekend, and last edited on 2 October. It is a basic
+massing model of the real PACE spacecraft rather than an engineering model.
+
+---
+
 ## Running it
 
 Static site, no build step. Serve the folder over HTTP rather than opening the
