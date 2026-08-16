@@ -1,0 +1,37 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+*:Zone.Identifier
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Secrets, never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+service-account*.json
+
+# Video does not go in git. It goes in a release or on YouTube.
+# This repo was 155 MB because story.mp4 and earth.mp4 were committed,
+# then deleted from the tree but not from history. Deleting did not help.
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# Archives
+*.zip
+*.7z
+*.rar
