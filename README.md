@@ -83,6 +83,11 @@ The satellite was modelled in Tinkercad on **26 September 2024**, nine days
 before the hackathon weekend, and last edited on 2 October. It is a basic
 massing model of the real PACE spacecraft rather than an engineering model.
 
+![The PACE satellite model rotating](assets/gifs/satellite-turntable.gif)
+
+Solar array, spacecraft bus, the large instrument aperture and the sensor
+cluster on the far face. Recorded from the live Tinkercad model.
+
 ---
 
 ## Running it
